@@ -1,0 +1,11 @@
+scan_filter_chain:
+- name: box
+  type: laser_filters/LaserScanBoxFilter
+  params: # same as costmap_common_params.yaml
+    box_frame: $(arg box_frame)
+    min_x: -0.6
+    max_x: 0.44
+    min_y: -0.22
+    max_y: 0.22
+    min_z: -1.0
+    max_z: 1.0

@@ -1,0 +1,31 @@
+<launch>
+    <arg name="cloud_in" default="ouster/points"/>
+    <arg name="frame_prefix" default="/"/>
+    <arg name="box_frame" default="$(arg frame_prefix)os_lidar"/>
+
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+        <remap from="cloud_in" to="$(arg cloud_in)"/>
+        <remap from="scan" to="base_scan"/>
+
+        <param name="transform_tolerance" value="0.01" />
+        <param name="min_height" value="-0.2" /> <!-- For table detection -->
+        <param name="max_height" value="0.1" />
+        <param name="angle_min" value="-3.1415926535897931" />
+        <param name="angle_max" value="3.1415926535897931" />
+        <param name="angle_increment" value="0.0174533" /> <!-- #0.0174533 # 1 deg in rad-->
+        <param name="scan_time" value="0.1" />
+
+        <param name="range_min" value="0.1" />
+        <param name="range_max" value="20.0" />
+        <param name="use_inf" value="true" />
+        <param name="inf_epsilon" value="0.1" />
+        <param name="concurrency_level" value="1" />
+    </node>
+
+    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+        <rosparam command="load" file="$(find champ_navigation)/launch/slam/laser_config.yaml" subst_value="true" />
+        <remap from="scan" to="base_scan" />
+        <remap from="scan_filtered" to="scan" />
+    </node>
+
+</launch>
