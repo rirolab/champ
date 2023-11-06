@@ -23,7 +23,8 @@
         <param if="$(arg gazebo)" name="use_sim_time" value="true"/>
 
         <!-- ==================== LOAD PARAMETERS ==================== -->
-        <include file="$(find champ_description)/launch/description.launch">
+        <include file="$(find champ_description)/launch/description_collab.launch">
+            <arg name="robot_name"       value="$(arg robot_name)" />
             <arg name="description_file" value="$(arg description_file)"/>
         </include>
         <rosparam command="load" ns="gait"       file="$(arg gait_config_file)" />
