@@ -62,6 +62,7 @@
         <node pkg="champ_base" name="state_estimator" type="state_estimation_node" output="screen">
             <param if="$(arg hardware_connected)" name="orientation_from_imu" value="true"/>
             <param if="$(arg gazebo)" name="orientation_from_imu" value="true"/>            
+            <remap from="/tf" to="/tf_state_estimator" />
         </node>
 
         <node pkg="robot_localization" type="ekf_localization_node" name="base_to_footprint_ekf"> 
